@@ -13,7 +13,7 @@
       <!-- Grid Overlay -->
       <div class="grid-overlay absolute-full"></div>
 
-      <div class="hero-content relative-position z-top q-py-xl" style="max-width: 900px;">
+      <div class="hero-content relative-position q-py-xl" style="max-width: 900px;">
         <div class="fade-in-up" style="animation-delay: 0.1s">
             <div class="inline-block q-py-xs q-px-md rounded-full bg-white/10 backdrop-blur border border-white/20 q-mb-lg">
                 <span class="text-primary text-weight-bold">New v2.0</span> 
@@ -40,6 +40,7 @@
             size="lg"
             class="q-px-xl q-py-md text-weight-bold hover-lift shadow-glow"
             no-caps
+            to="/register"
           />
           <q-btn
             outline
@@ -50,6 +51,7 @@
             size="lg"
             class="q-px-xl q-py-md text-weight-bold hover-lift bg-black/30 backdrop-blur"
             no-caps
+            to="/login"
           />
         </div>
       </div>
@@ -250,6 +252,7 @@
             size="lg"
             class="q-px-lg q-py-md text-weight-bold hover-scale shadow-glow-white"
             no-caps
+            to="/register"
           />
         </div>
     </section>

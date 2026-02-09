@@ -10,7 +10,7 @@
         'header-hidden': isHidden,
         'q-mt-md': $q.screen.gt.sm
       }"
-      :style="$q.screen.gt.sm ? 'left: 0; right: 0; margin-left: auto; margin-right: auto; max-width: 1200px; width: 95%; z-index: 9999;' : 'z-index: 9999;'"
+      :style="$q.screen.gt.sm ? 'left: 0; right: 0; margin-left: auto; margin-right: auto; max-width: 1200px; width: 95%; z-index: 2000;' : 'z-index: 2000;'"
     >
       <q-toolbar class="q-px-lg" style="height: 70px;">
         <!-- Logo -->
@@ -36,7 +36,7 @@
 
         <!-- Action Buttons -->
         <div class="gt-sm row items-center q-gutter-x-md">
-          <q-btn flat dense no-caps label="Sign In" class="text-grey-4 hover:text-white transition-colors" />
+          <q-btn flat dense no-caps label="Sign In" class="text-grey-4 hover:text-white transition-colors" to="/login" />
           <q-btn 
             unelevated 
             rounded 
@@ -45,10 +45,11 @@
             label="Get Started" 
             no-caps 
             class="text-weight-bold q-px-lg hover-glow"
+            to="/register"
           />
         </div>
 
-        <!-- Mobile Menu Button -->
+        <!-- Mobile Menu Button - Opens Drawer -->
         <q-btn flat round icon="menu" class="lt-md" @click="toggleLeftDrawer" />
       </q-toolbar>
     </q-header>
@@ -60,28 +61,59 @@
       overlay
       behavior="mobile"
       :width="280"
-      class="mobile-drawer-final"
-      style="z-index: 12000 !important;"
+      style="z-index: 3000 !important;"
     >
-      <div class="column full-height q-pa-lg relative-position text-white">
-        <div class="row justify-between items-center q-mb-xl">
-           <div class="text-h6 text-weight-bold flex items-center">
-              <q-icon name="auto_stories" class="q-mr-sm text-primary" />
-              DigiGura
-           </div>
-           <q-btn flat round icon="close" @click="toggleLeftDrawer" color="white" />
-        </div>
+      <div class="column full-height q-pa-md text-white" style="background-color: #1d1d1d;">
+        <q-list separator class="no-border">
+            
+            <!-- Drawer Header -->
+            <q-item class="q-mb-md">
+                <q-item-section>
+                    <div class="text-h6 text-weight-bold flex items-center justify-between full-width">
+                        <!-- Logo in Lime Green -->
+                        <span style="color: #ccff00;">DigiGura</span>
+                        
+                        <!-- Close Button -->
+                        <q-btn 
+                            flat 
+                            round 
+                            dense 
+                            icon="close" 
+                            color="white" 
+                            @click="toggleLeftDrawer"
+                        />
+                    </div>
+                </q-item-section>
+            </q-item>
 
-        <div class="column q-gutter-y-lg text-h6">
-          <a href="#" class="mobile-nav-link" @click="toggleLeftDrawer">Home</a>
-          <a href="#features" class="mobile-nav-link" @click="toggleLeftDrawer">Features</a>
-          <a href="#pricing" class="mobile-nav-link" @click="toggleLeftDrawer">Pricing</a>
-          <a href="#about" class="mobile-nav-link" @click="toggleLeftDrawer">About</a>
-        </div>
+            <!-- Navigation Items -->
+            <q-item clickable v-ripple @click="toggleLeftDrawer">
+                <q-item-section avatar>
+                    <q-icon name="home" color="white" />
+                </q-item-section>
+                <q-item-section class="text-white text-h6">Home</q-item-section>
+            </q-item>
 
-        <div class="q-mt-auto column q-gutter-y-md">
-           <q-btn outline rounded color="white" label="Sign In" no-caps class="full-width" />
-           <q-btn unelevated rounded color="primary" text-color="black" label="Get Started" no-caps class="full-width text-weight-bold" />
+            <q-item clickable v-ripple @click="toggleLeftDrawer">
+                <q-item-section avatar>
+                    <q-icon name="list" color="white" />
+                </q-item-section>
+                <q-item-section class="text-white text-h6">Features</q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple @click="toggleLeftDrawer">
+                <q-item-section avatar>
+                    <q-icon name="payments" color="white" />
+                </q-item-section>
+                <q-item-section class="text-white text-h6">Pricing</q-item-section>
+            </q-item>
+
+        </q-list>
+        
+        <!-- Footer in Drawer -->
+        <div class="q-mt-auto q-pa-sm q-gutter-y-sm">
+             <q-btn outline rounded color="white" label="Sign In" no-caps class="full-width" to="/login" />
+             <q-btn unelevated rounded color="primary" text-color="black" label="Get Started" no-caps class="full-width text-weight-bold" to="/register" />
         </div>
       </div>
     </q-drawer>
@@ -220,7 +252,7 @@ onUnmounted(() => {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-  z-index: 9999; // Ensure it stays on top of everything
+  z-index: 99999; // Ensure it stays on top of everything
 
   @media (max-width: 1024px) {
       border-radius: 0;
@@ -315,23 +347,4 @@ onUnmounted(() => {
 }
 </style>
 
-<style lang="scss">
-/* Final explicit fix for sidebar */
-.mobile-drawer-final {
-    background-color: #000000 !important; /* Force black */
-    background-color: rgba(0, 0, 0, 0.95) !important; /* Slight transparency */
-    backdrop-filter: blur(10px);
-    z-index: 12000 !important; /* Ensure it is on top */
-}
 
-/* Ensure the container (which might hold the backdrop) is also high index */
-.q-drawer-container {
-    z-index: 12000 !important; 
-}
-
-/* Ensure the backdrop is just below the drawer */
-.q-drawer__backdrop {
-    z-index: 11999 !important;
-    background-color: rgba(0,0,0,0.5) !important;
-}
-</style>

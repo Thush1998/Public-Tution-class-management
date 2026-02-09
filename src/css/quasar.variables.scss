@@ -12,14 +12,25 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary: #000000;
-$secondary: #424242;
-$accent: #9E9E9E;
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
 
-$dark: #1d1d1d;
-$dark-page: #121212;
+// Brand Colors (Neon & Dark)
+$primary   : #ccff00; // Neon Lime
+$secondary : #7000ff; // Electric Purple
+$accent    : #00ffff; // Cyan
 
-$positive: #21ba45;
-$negative: #c10015;
-$info: #31ccec;
-$warning: #f2c037;
+// Dark Theme Backgrounds
+$dark      : #050505; // Deepest Black
+$dark-page : #000000; // True Black
+$dark-alt  : #0a0a0a; // Slightly lighter black for cards
+
+// Functional Colors
+$positive  : #00e676;
+$negative  : #ff1744;
+$info      : #2979ff;
+$warning   : #ffea00;
+
+// Custom Gradients (Usage in classes)
+// $gradient-primary: linear-gradient(135deg, #ccff00 0%, #00ff99 100%);
+

@@ -1,126 +1,254 @@
 <template>
-  <q-page class="bg-black text-white relative-position overflow-hidden" @mousemove="handleMouseMove">
-    <!-- Animated Background -->
-    <div class="animated-bg absolute-full"></div>
-    <div class="grid-overlay absolute-full"></div>
+  <q-page class="bg-black text-white relative-position overflow-hidden font-sans">
+    
+    <!-- Hero Section with Aurora Background -->
+    <section class="hero-section relative-position flex flex-center text-center q-px-md overflow-hidden">
+      <!-- Aurora Effect -->
+      <div class="aurora-container absolute-full">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+      </div>
+      
+      <!-- Grid Overlay -->
+      <div class="grid-overlay absolute-full"></div>
 
-    <!-- Hero Section -->
-    <section class="hero-section relative-position flex flex-center text-center q-pa-md" style="min-height: 95vh;">
-      <div class="hero-bg absolute-full"></div>
-      <div class="hero-content relative-position z-top q-py-xl" data-aos="fade-up">
-        <div class="q-mb-lg fade-in-up" style="animation-delay: 0.2s">
-          <q-badge outline color="light-green-13" label="v2.0 • AI Powered System" class="q-pa-sm text-subtitle2 rounded-borders tracking-widest" />
+      <div class="hero-content relative-position z-top q-py-xl" style="max-width: 900px;">
+        <div class="fade-in-up" style="animation-delay: 0.1s">
+            <div class="inline-block q-py-xs q-px-md rounded-full bg-white/10 backdrop-blur border border-white/20 q-mb-lg">
+                <span class="text-primary text-weight-bold">New v2.0</span> 
+                <span class="text-grey-4 q-ml-sm">AI-Powered Analytics Available Now</span>
+            </div>
         </div>
-        <h1 class="text-h1 text-weight-bolder q-mb-md hero-title fade-in-up" style="animation-delay: 0.4s">
-          The Future of <br>
-          <span class="text-gradient">Education Management</span>
+        
+        <h1 class="text-h1 text-weight-bolder q-mb-lg hero-title fade-in-up leading-tight" style="animation-delay: 0.3s">
+          Manage your tuition <br>
+          <span class="text-gradient-primary">like a pro.</span>
         </h1>
-        <p class="text-h5 text-grey-5 q-mb-xl hero-subtitle fade-in-up" style="animation-delay: 0.6s; max-width: 700px; margin-left: auto; margin-right: auto;">
-            Streamline operations with our <span class="text-white text-weight-bold typing-effect">AI-Driven Ecosystem</span>
+        
+        <p class="text-h5 text-grey-5 q-mb-xl fade-in-up leading-normal" style="animation-delay: 0.5s; max-width: 650px; margin-left: auto; margin-right: auto;">
+            The all-in-one platform to streamline attendance, payments, and student performance with <span class="text-white text-weight-bold">AI-driven insights</span>.
         </p>
-        <div class="row justify-center q-gutter-md fade-in-up" style="animation-delay: 0.8s">
+        
+        <div class="row justify-center q-gutter-md fade-in-up" style="animation-delay: 0.7s">
           <q-btn
             unelevated
             rounded
-            color="white"
+            color="primary"
             text-color="black"
-            label="Get Started"
+            label="Start Free Trial"
             size="lg"
-            class="q-px-xl q-py-md text-weight-bold shadow-transition hover-scale glow-effect"
+            class="q-px-xl q-py-md text-weight-bold hover-lift shadow-glow"
             no-caps
           />
           <q-btn
             outline
             rounded
             color="white"
-            label="Watch Demo"
+            label="View Demo"
             icon="play_circle"
             size="lg"
-            class="q-px-xl q-py-md text-weight-bold shadow-transition hover-scale"
+            class="q-px-xl q-py-md text-weight-bold hover-lift bg-black/30 backdrop-blur"
             no-caps
           />
         </div>
-
-        <!-- Float Elements (Decorative) -->
-        <div class="floating-element float-1 absolute" style="top: 20%; left: 10%">
-             <q-icon name="auto_awesome" size="xl" color="grey-8" />
-        </div>
-        <div class="floating-element float-2 absolute" style="bottom: 15%; right: 10%">
-             <q-icon name="code" size="xl" color="grey-8" />
-        </div>
       </div>
     </section>
 
-    <!-- Advanced Features (Bento Grid) -->
-    <section class="features-section q-py-xl q-px-md relative-position">
+    <!-- Logo Marquee -->
+    <section class="q-py-lg border-y border-white/10 bg-black/50 backdrop-blur relative-position z-top">
+        <div class="text-center text-grey-6 text-caption q-mb-md uppercase tracking-widest">Trusted by over 500+ institutes</div>
+        <div class="marquee-container overflow-hidden">
+            <div class="marquee-content flex items-center q-gutter-x-xl">
+                <span v-for="n in 10" :key="n" class="text-h6 text-grey-7 text-weight-bold opacity-50 hover:opacity-100 transition-opacity cursor-default">
+                    INSTITUTE {{ n }}
+                </span>
+                <!-- Duplicate for seamless loop -->
+                <span v-for="n in 10" :key="'dup-'+n" class="text-h6 text-grey-7 text-weight-bold opacity-50 hover:opacity-100 transition-opacity cursor-default">
+                    INSTITUTE {{ n }}
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spotlight Bento Grid -->
+    <section id="features" class="q-py-xl q-px-md relative-position z-top" @mousemove="handleMouseMove">
       <div class="container" style="max-width: 1200px; margin: 0 auto;">
-        <div class="text-center q-mb-xl" data-aos="fade-up">
-          <h2 class="text-h3 text-weight-bold q-mb-sm">Engineered for Giants</h2>
-          <p class="text-subtitle1 text-grey-5">Everything you need, nothing you don't.</p>
+        <div class="text-center q-mb-xl">
+          <h2 class="text-h3 text-weight-bold q-mb-md">Everything you need</h2>
+          <p class="text-xl text-grey-5">Powerful features wrapped in a beautiful interface.</p>
         </div>
 
         <div class="bento-grid">
-            <!-- Large Card: Analytics -->
-            <div class="bento-card large glass-effect" data-tilt>
-                <div class="content q-pa-lg">
-                    <q-icon name="insights" size="3rem" color="light-green-13" class="q-mb-md" />
-                    <div class="text-h5 text-weight-bold q-mb-sm">Real-time Analytics</div>
-                    <p class="text-grey-5">Review performance metrics, financial health, and student attendance in real-time with our AI-powered dashboard.</p>
-                    <div class="chart-mockup q-mt-md bg-grey-9 rounded-borders" style="height: 100px; width: 100%; opacity: 0.5;">
-                        <span></span>
+            <!-- Row 1 -->
+            <!-- Analytics Card (Large) -->
+            <div class="bento-card large spotlight-card group">
+                <div class="absolute-full spotlight-bg"></div>
+                <div class="relative-position z-10 q-pa-xl h-full flex column justify-between">
+                    <div>
+                        <div class="icon-box bg-primary/20 text-primary q-mb-md">
+                            <q-icon name="insights" size="2rem" />
+                        </div>
+                        <h3 class="text-h5 text-weight-bold q-mb-sm">Advanced Analytics</h3>
+                        <p class="text-grey-5">Track student progress, attendance trends, and financial reports with our AI-powered dashboard.</p>
+                    </div>
+                    <div class="mockup-chart q-mt-lg">
+                        <div class="bar" style="height: 40%"></div>
+                        <div class="bar" style="height: 70%"></div>
+                        <div class="bar" style="height: 50%"></div>
+                        <div class="bar" style="height: 85%"></div>
+                        <div class="bar active" style="height: 60%"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Medium Card: Students -->
-            <div class="bento-card medium glass-effect" data-tilt style="background-image: url('/students.jpg'); background-size: cover; background-position: center;">
-                <div class="absolute-full bg-black" style="opacity: 0.6"></div>
-                <div class="content q-pa-lg relative-position z-top">
-                    <q-icon name="groups" size="2.5rem" color="light-blue-13" class="q-mb-md" />
-                    <div class="text-h6 text-weight-bold q-mb-sm">Student Portal</div>
-                    <p class="text-grey-4">Seamless profiles for thousands of students.</p>
-                </div>
+            <!-- Mobile App (Medium) -->
+            <div class="bento-card medium spotlight-card group overflow-hidden">
+                 <div class="absolute-full spotlight-bg"></div>
+                 <div class="absolute-right w-1/2 h-full bg-gradient-to-l from-primary/10 to-transparent"></div>
+                 <div class="relative-position z-10 q-pa-lg">
+                    <q-icon name="smartphone" size="2rem" class="text-white q-mb-md" />
+                    <h3 class="text-h6 text-weight-bold q-mb-sm">Mobile First</h3>
+                    <p class="text-grey-5 text-sm">Manage everything from your phone. iOS and Android apps.</p>
+                 </div>
+                 <q-icon name="phone_iphone" size="8rem" class="absolute-bottom-right text-grey-9 -rotate-12 translate-y-4 translate-x-4 opacity-50" />
             </div>
 
-            <!-- Medium Card: Payments -->
-            <div class="bento-card medium glass-effect" data-tilt>
-                <div class="content q-pa-lg">
-                     <q-icon name="payments" size="2.5rem" color="amber-13" class="q-mb-md" />
-                    <div class="text-h6 text-weight-bold q-mb-sm">Smart Payments</div>
-                    <p class="text-grey-5">Automated billing and receipt generation.</p>
-                </div>
+            <!-- Row 2 -->
+            <!-- Smart Attendance (Medium) -->
+             <div class="bento-card medium spotlight-card group">
+                 <div class="absolute-full spotlight-bg"></div>
+                 <div class="relative-position z-10 q-pa-lg">
+                    <div class="icon-box bg-purple-500/20 text-purple-400 q-mb-md">
+                        <q-icon name="qr_code_scanner" size="1.8rem" color="secondary" />
+                    </div>
+                    <h3 class="text-h6 text-weight-bold q-mb-sm">QR Attendance</h3>
+                    <p class="text-grey-5 text-sm">Lightning fast check-ins with automated SMS notifications to parents.</p>
+                 </div>
             </div>
 
-             <!-- Wide Card: Security -->
-             <div class="bento-card wide glass-effect" data-tilt>
-                <div class="content q-pa-lg row items-center">
+            <!-- Paper Generator (Medium) -->
+             <div class="bento-card medium spotlight-card group">
+                 <div class="absolute-full spotlight-bg"></div>
+                 <div class="relative-position z-10 q-pa-lg">
+                    <div class="icon-box bg-blue-500/20 text-blue-400 q-mb-md">
+                         <q-icon name="auto_fix_high" size="1.8rem" color="blue" />
+                    </div>
+                    <h3 class="text-h6 text-weight-bold q-mb-sm">AI Paper Gen</h3>
+                    <p class="text-grey-5 text-sm">Generate exam papers and MCQs instantly using our advanced AI models.</p>
+                 </div>
+            </div>
+
+            <!-- Payments (Medium) -->
+            <div class="bento-card medium spotlight-card group">
+                 <div class="absolute-full spotlight-bg"></div>
+                 <div class="relative-position z-10 q-pa-lg">
+                    <div class="icon-box bg-yellow-500/20 text-yellow-400 q-mb-md">
+                        <q-icon name="payments" size="1.8rem" color="warning" />
+                    </div>
+                    <h3 class="text-h6 text-weight-bold q-mb-sm">Payments</h3>
+                    <p class="text-grey-5 text-sm">Seamless online payments and automated receipt generation.</p>
+                 </div>
+            </div>
+
+            <!-- Row 3 -->
+            <!-- Security (Large span) -->
+             <div class="bento-card large spotlight-card group">
+                <div class="absolute-full spotlight-bg"></div>
+                <div class="content q-pa-xl row items-center relative-position z-10">
                     <div class="col-8">
-                        <q-icon name="security" size="2.5rem" color="red-13" class="q-mb-md" />
-                        <div class="text-h6 text-weight-bold q-mb-sm">Enterprise-Grade Security</div>
-                        <p class="text-grey-5">Your data is encrypted and secure with industry-standard protocols.</p>
+                        <q-icon name="shield" size="2.5rem" color="green-13" class="q-mb-md" />
+                        <div class="text-h5 text-weight-bold q-mb-sm">Enterprise Security</div>
+                        <p class="text-grey-5">Your data is encrypted with 256-bit AES encryption. We perform daily backups to ensure your institute's data is never lost.</p>
                     </div>
                      <div class="col-4 text-center">
-                        <q-icon name="lock" size="4rem" color="grey-8" />
+                        <q-icon name="lock" size="6rem" color="grey-9" />
                     </div>
                 </div>
             </div>
+
+            <!-- Support (Medium) -->
+            <div class="bento-card medium spotlight-card group">
+                 <div class="absolute-full spotlight-bg"></div>
+                 <div class="relative-position z-10 q-pa-lg">
+                    <div class="icon-box bg-red-500/20 text-red-400 q-mb-md">
+                        <q-icon name="support_agent" size="1.8rem" color="red" />
+                    </div>
+                    <h3 class="text-h6 text-weight-bold q-mb-sm">24/7 Support</h3>
+                    <p class="text-grey-5 text-sm">Our dedicated support team is always here to help you succeed.</p>
+                 </div>
+            </div>
+
         </div>
       </div>
     </section>
 
+    <!-- How It Works Section -->
+    <section class="q-py-xl relative-position z-top">
+        <div class="container" style="max-width: 1000px; margin: 0 auto;">
+            <div class="text-center q-mb-xl">
+                 <h2 class="text-h3 text-weight-bold q-mb-md">Simplicity in Motion</h2>
+                 <p class="text-xl text-grey-5">Get up and running in minutes, not days.</p>
+            </div>
+
+            <div class="row q-col-gutter-lg relative-position">
+                <!-- Connecting Line (Desktop) -->
+                <div class="absolute-top gt-sm" style="top: 40%; left: 10%; right: 10%; height: 2px; background: linear-gradient(90deg, transparent, #333, transparent); z-index: 0;"></div>
+
+                <!-- Step 1 -->
+                <div class="col-12 col-md-4 text-center relative-position z-10">
+                    <div class="step-card bg-black border border-white/10 q-pa-lg rounded-xl">
+                        <div class="step-icon bg-grey-9 text-white q-mb-md shadow-lg">1</div>
+                        <h4 class="text-h6 text-weight-bold q-mb-sm">Register</h4>
+                        <p class="text-grey-5 text-sm">Create your institute profile and configure your class settings.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="col-12 col-md-4 text-center relative-position z-10">
+                     <div class="step-card bg-black border border-white/10 q-pa-lg rounded-xl">
+                        <div class="step-icon bg-primary text-black q-mb-md shadow-glow-primary">2</div>
+                        <h4 class="text-h6 text-weight-bold q-mb-sm">Onboard</h4>
+                        <p class="text-grey-5 text-sm">Add students via bulk upload or share your unique registration link.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="col-12 col-md-4 text-center relative-position z-10">
+                     <div class="step-card bg-black border border-white/10 q-pa-lg rounded-xl">
+                        <div class="step-icon bg-grey-9 text-white q-mb-md shadow-lg">3</div>
+                        <h4 class="text-h6 text-weight-bold q-mb-sm">Automate</h4>
+                        <p class="text-grey-5 text-sm">Sit back as attendance and payments are tracked automatically.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="q-py-xl bg-grey-9 text-center border-y border-white/5">
+        <div class="container row justify-center q-gutter-x-xl" style="max-width: 1000px; margin: 0 auto;">
+            <div v-for="(stat, index) in stats" :key="index" class="col-auto q-mb-md">
+                <h3 class="text-h2 text-weight-bolder text-primary q-mb-none">{{ stat.value }}</h3>
+                <div class="text-grey-5 text-uppercase tracking-widest text-caption">{{ stat.label }}</div>
+            </div>
+        </div>
+    </section>
+
     <!-- Call to Action -->
-    <section class="cta-section q-py-xl text-center relative-position">
-         <div class="blur-blob absolute-center"></div>
+    <section class="cta-section q-py-xl text-center relative-position overflow-hidden">
+        <div class="absolute-center glow-orb"></div>
         <div class="container relative-position z-top" style="max-width: 800px; margin: 0 auto;">
-            <h2 class="text-h3 text-weight-bolder q-mb-md">Ready to Upgrade?</h2>
-            <q-btn
+            <h2 class="text-h2 text-weight-bolder q-mb-md hero-title">Ready to transform your institute?</h2>
+            <p class="text-h6 text-grey-5 q-mb-xl">Join hundreds of other tuition masters who have modernized their classes.</p>
+             <q-btn
             unelevated
             rounded
             color="white"
             text-color="black"
-            label="Start Your Free Trial"
+            label="Get Started Now"
             size="lg"
-            class="q-px-xl q-py-md text-weight-bold shadow-transition hover-scale glow-effect"
+            class="q-px-lg q-py-md text-weight-bold hover-scale shadow-glow-white"
             no-caps
           />
         </div>
@@ -130,111 +258,120 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+// Removed unused imports
+
+
+const stats = [
+    { label: 'Active Students', value: '15k+' },
+    { label: 'Institutes', value: '500+' },
+    { label: 'Daily Attendance', value: '50k' },
+]
 
 const handleMouseMove = (e) => {
-    // Parallax effect for grid overlay
-    const x = e.clientX / window.innerWidth
-    const y = e.clientY / window.innerHeight
-    document.documentElement.style.setProperty('--mouse-x', x)
-    document.documentElement.style.setProperty('--mouse-y', y)
-}
-
-onMounted(() => {
-    // Simple vanilla JS tilt effect
-    const cards = document.querySelectorAll('[data-tilt]')
+    const cards = document.querySelectorAll('.spotlight-card');
     cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect()
-            const x = e.clientX - rect.left
-            const y = e.clientY - rect.top
-            
-            const centerX = rect.width / 2
-            const centerY = rect.height / 2
-            
-            const rotateX = ((y - centerY) / centerY) * -5 // Max 5deg tilt
-            const rotateY = ((x - centerX) / centerX) * 5
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
-        })
-
-        card.addEventListener('mouseleave', () => {
-             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'
-        })
-    })
-})
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+    });
+}
 </script>
 
 <style lang="scss" scoped>
-// Variables
-$feature-gap: 24px;
-
-// Background Animation
-.animated-bg {
-    background: radial-gradient(circle at 50% 50%, #111 0%, #000000 100%);
-    z-index: 0;
-}
-
-.grid-overlay {
-    background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: 0;
-    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-    opacity: 0.6;
-    transition: transform 0.1s ease-out;
-    transform: translate(calc(var(--mouse-x) * -20px), calc(var(--mouse-y) * -20px));
-}
-
-.hero-bg {
-  background-image: url('/hero_bg.png');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.2; /* Subtle image blending */
-}
-
-// Typography
+// Utilities
+.font-sans { font-family: 'Inter', sans-serif; }
+.tracking-widest { letter-spacing: 0.15em; }
+.leading-tight { line-height: 1.1; }
 .hero-title {
+    font-size: clamp(2rem, 6vw, 5rem); // Responsive font size
     line-height: 1.1;
-    letter-spacing: -2px;
 }
-
-.text-gradient {
-    background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+.text-gradient-primary {
+    background: linear-gradient(135deg, $primary 0%, #00ff99 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.border-white\/10 { border-color: rgba(255,255,255,0.1); }
+.bg-white\/10 { background: rgba(255,255,255,0.1); }
+.backdrop-blur { backdrop-filter: blur(8px); }
+.hover-lift { transition: transform 0.3s ease; &:hover { transform: translateY(-4px); } }
 
-.tracking-widest {
-    letter-spacing: 2px;
+// Hero Section
+.hero-section {
+    min-height: 100vh;
+    padding-top: 80px;
 }
 
-// Bento Grid Layout
+.aurora-container {
+    filter: blur(80px);
+    opacity: 0.6;
+    z-index: 0;
+}
+
+.aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    animation: aurora-float 10s infinite alternate;
+}
+
+.blob-1 { width: 500px; height: 500px; background: $secondary; top: -10%; left: -10%; animation-delay: 0s; }
+.blob-2 { width: 400px; height: 400px; background: $primary; top: 20%; right: -5%; animation-delay: 2s; }
+.blob-3 { width: 600px; height: 300px; background: $accent; bottom: -10%; left: 30%; animation-delay: 4s; }
+
+@keyframes aurora-float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, -40px) scale(1.1); }
+}
+
+.grid-overlay {
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+}
+
+// Marquee
+.marquee-container {
+    white-space: nowrap;
+}
+.marquee-content {
+    display: inline-block;
+    animation: scroll 30s linear infinite;
+}
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+// Spotlight Bento Grid
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto auto; // Two rows
-    gap: $feature-gap;
-    
-    @media (max-width: 1023px) {
-        display: flex;
-        flex-direction: column;
+    grid-auto-rows: minmax(280px, auto);
+    gap: 24px;
+
+    @media (max-width: 1024px) { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 16px; // Smaller gap on mobile
     }
 }
 
 .bento-card {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.1s ease-out; // Snappy tilt
-    overflow: hidden;
     position: relative;
-
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    
     &.large {
         grid-column: span 8;
-        grid-row: span 2;
+        grid-row: span 1; // Changed to 1 to ensure grid alignment
     }
     
     &.medium {
@@ -245,129 +382,96 @@ $feature-gap: 24px;
     &.wide {
          grid-column: span 12;
          grid-row: span 1;
-         margin-top: $feature-gap; // Ensure spacing if not in grid
-    }
-
-    &:hover {
-        border-color: rgba(255, 255, 255, 0.15);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        
-        &::after {
-            opacity: 1;
-        }
-    }
-
-    // Shine effect
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.1), transparent 40%);
-        opacity: 0;
-        transition: opacity 0.3s;
-        pointer-events: none;
     }
 }
 
-// Interactive Elements
-.hover-scale {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    &:hover {
-        transform: scale(1.05);
-    }
+.spotlight-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 24px;
+    padding: 1px;
+    background: radial-gradient(
+        600px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.4),
+        transparent 40%
+    );
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
-.glow-effect:hover {
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+.spotlight-card:hover::before { opacity: 1; }
+
+.spotlight-bg {
+    background: radial-gradient(
+        800px circle at var(--mouse-x) var(--mouse-y), 
+        rgba(255,255,255,0.06), 
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.spotlight-card:hover .spotlight-bg { opacity: 1; }
+
+.icon-box {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
 }
 
-// Animations using Keyframes
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+// Chart Animation
+.mockup-chart {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; height: 100px;
+    .bar {
+        flex: 1; background: rgba(255,255,255,0.1); border-radius: 4px;
+        transition: height 0.5s ease;
+        &.active { background: $primary; box-shadow: 0 0 20px rgba($primary, 0.5); }
     }
 }
+.bento-card:hover .bar { height: 90% !important; transition-delay: 0.1s; }
 
+// CTA Glow
+.glow-orb {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba($primary, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: pulse 4s infinite alternate;
+}
+@keyframes pulse { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 0.8; transform: scale(1.1); } }
+
+// Fade In
 .fade-in-up {
     opacity: 0;
     animation: fadeInUp 0.8s ease-out forwards;
 }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-// Floating Elements
-.floating-element {
-    animation: float 6s ease-in-out infinite;
-}
-
-.float-2 {
-    animation-delay: 3s;
-}
-
-@keyframes float {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-}
-
-.blur-blob {
-    width: 300px;
-    height: 300px;
-    background: rgba(255, 255, 255, 0.1);
-    filter: blur(80px);
+// Steps Section
+.step-icon {
+    width: 60px; height: 60px;
     border-radius: 50%;
-    z-index: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 auto 1rem;
+    border: 4px solid #000; // Gap effect
 }
 
-// Typing Effect
-.typing-effect {
-    border-right: 3px solid white;
-    white-space: nowrap;
-    overflow: hidden;
-    display: inline-block;
-    animation: typing 3s steps(30, end) infinite alternate, blink-caret .75s step-end infinite;
+.shadow-glow-primary {
+    box-shadow: 0 0 20px rgba($primary, 0.6);
 }
 
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: white; }
-}
-
-// Chart Mockup
-.chart-mockup {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    padding: 0 10px;
-    overflow: hidden;
-    
-    &::before, &::after, & span {
-        content: '';
-        width: 15%;
-        background: linear-gradient(to top, #4caf50, #81c784);
-        border-radius: 4px 4px 0 0;
-        animation: grow-bar 2s ease-out forwards;
+.step-card {
+    transition: transform 0.3s;
+    &:hover {
+        transform: translateY(-5px);
+        border-color: rgba($primary, 0.3);
     }
-    
-    &::before { height: 40%; animation-delay: 0.1s; }
-    &::after { height: 70%; animation-delay: 0.3s; }
-    & span { 
-        display: block; 
-        height: 60%; 
-        animation-delay: 0.5s; 
-    }
-}
-
-@keyframes grow-bar {
-    from { transform: scaleY(0); transform-origin: bottom; }
-    to { transform: scaleY(1); transform-origin: bottom; }
 }
 </style>

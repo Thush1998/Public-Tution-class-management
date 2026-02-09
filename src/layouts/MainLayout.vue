@@ -1,113 +1,167 @@
 <template>
-  <q-layout view="lHh Lpr lff" class="bg-black text-white">
-    <!-- Header -->
-    <q-header :class="['fixed-top', { 'glass-header': isScrolled, 'bg-transparent': !isScrolled }]" style="transition: all 0.3s ease;">
-      <q-toolbar class="q-py-md container" style="max-width: 1200px; margin: 0 auto;">
+  <q-layout view="lHh Lpr lff" class="bg-black text-white font-sans">
+    
+    <!-- Floating "Island" Header -->
+    <q-header 
+      class="fixed-top transition-all" 
+      :class="{ 
+        'island-header': isScrolled, 
+        'bg-transparent': !isScrolled,
+        'header-hidden': isHidden,
+        'q-mt-md': $q.screen.gt.sm
+      }"
+      :style="$q.screen.gt.sm ? 'left: 0; right: 0; margin-left: auto; margin-right: auto; max-width: 1200px; width: 95%; z-index: 9999;' : 'z-index: 9999;'"
+    >
+      <q-toolbar class="q-px-lg" style="height: 70px;">
         <!-- Logo -->
-        <q-toolbar-title class="text-weight-bold text-h5 flex items-center cursor-pointer" @click="$router.push('/')">
-          <q-icon name="school" class="q-mr-sm text-light-green-13" size="md" />
-          Public Tuition
+        <q-toolbar-title 
+          class="text-weight-bold text-h5 flex items-center cursor-pointer logo-text" 
+          @click="$router.push('/')"
+        >
+          <q-icon name="auto_stories" class="q-mr-sm text-primary" size="sm" />
+          <span class="tracking-tighter">Digi<span class="text-primary">Gura</span></span>
         </q-toolbar-title>
 
-        <!-- Use QSpace for spacing -->
         <q-space />
 
         <!-- Desktop Navigation -->
-        <div class="gt-sm q-gutter-md flex items-center">
-          <q-btn flat no-caps label="Home" to="/" class="text-grey-4 hover-text-white" />
-          <q-btn flat no-caps label="Features" href="#features" class="text-grey-4 hover-text-white" />
-          <q-btn flat no-caps label="About" class="text-grey-4 hover-text-white" />
-          <q-btn flat no-caps label="Contact" class="text-grey-4 hover-text-white" />
-          
-          <div class="q-pl-md">
-             <q-btn outline rounded no-caps label="Login" class="q-mr-sm" />
-             <q-btn unelevated rounded color="white" text-color="black" no-caps label="Get Started" class="text-weight-bold" />
-          </div>
+        <div class="gt-sm row items-center q-gutter-x-lg">
+          <a href="#" class="nav-link">Home</a>
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#pricing" class="nav-link">Pricing</a>
+          <a href="#about" class="nav-link">About</a>
         </div>
 
-        <!-- Mobile Menu -->
-        <q-btn flat round icon="menu" class="lt-md" />
+        <q-space />
+
+        <!-- Action Buttons -->
+        <div class="gt-sm row items-center q-gutter-x-md">
+          <q-btn flat dense no-caps label="Sign In" class="text-grey-4 hover:text-white transition-colors" />
+          <q-btn 
+            unelevated 
+            rounded 
+            color="primary" 
+            text-color="black" 
+            label="Get Started" 
+            no-caps 
+            class="text-weight-bold q-px-lg hover-glow"
+          />
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <q-btn flat round icon="menu" class="lt-md" @click="toggleLeftDrawer" />
       </q-toolbar>
     </q-header>
 
+    <!-- Mobile Navigation Drawer -->
+    <q-drawer
+      v-model="leftDrawerOpen"
+      side="right"
+      overlay
+      behavior="mobile"
+      :width="280"
+      class="mobile-drawer-final"
+      style="z-index: 12000 !important;"
+    >
+      <div class="column full-height q-pa-lg relative-position text-white">
+        <div class="row justify-between items-center q-mb-xl">
+           <div class="text-h6 text-weight-bold flex items-center">
+              <q-icon name="auto_stories" class="q-mr-sm text-primary" />
+              DigiGura
+           </div>
+           <q-btn flat round icon="close" @click="toggleLeftDrawer" color="white" />
+        </div>
+
+        <div class="column q-gutter-y-lg text-h6">
+          <a href="#" class="mobile-nav-link" @click="toggleLeftDrawer">Home</a>
+          <a href="#features" class="mobile-nav-link" @click="toggleLeftDrawer">Features</a>
+          <a href="#pricing" class="mobile-nav-link" @click="toggleLeftDrawer">Pricing</a>
+          <a href="#about" class="mobile-nav-link" @click="toggleLeftDrawer">About</a>
+        </div>
+
+        <div class="q-mt-auto column q-gutter-y-md">
+           <q-btn outline rounded color="white" label="Sign In" no-caps class="full-width" />
+           <q-btn unelevated rounded color="primary" text-color="black" label="Get Started" no-caps class="full-width text-weight-bold" />
+        </div>
+      </div>
+    </q-drawer>
+    
     <q-page-container>
       <router-view />
     </q-page-container>
 
-    <!-- Footer -->
-    <q-footer class="bg-black text-white q-pt-xl q-pb-lg" style="border-top: 1px solid rgba(255,255,255,0.1);">
+    <!-- Massive Modern Footer -->
+    <q-footer class="bg-black text-white q-pt-xl q-pb-lg border-t border-grey-9">
       <div class="container q-px-md" style="max-width: 1200px; margin: 0 auto;">
-        <div class="row q-col-gutter-xl">
-          
-          <!-- Column 1: Branding -->
-          <div class="col-12 col-md-4">
-             <div class="text-h5 text-weight-bold q-mb-md flex items-center">
-                <q-icon name="school" class="q-mr-sm text-light-green-13" />
-                Public Tuition
-             </div>
-             <p class="text-grey-5 leading-relaxed">
-               The ultimate AI-powered management system for modern tuition classes. Streamline visuals, payments, and attendance in one place.
-             </p>
-             <div class="q-mt-lg flex q-gutter-sm">
-               <q-btn round flat size="sm" icon="facebook" class="bg-grey-9 text-grey-4" />
-               <q-btn round flat size="sm" icon="ion-logo-twitter" class="bg-grey-9 text-grey-4" /> <!-- Note: ion-logo-twitter might need ionicons set, falling back to standard if not -->
-               <q-btn round flat size="sm" icon="public" class="bg-grey-9 text-grey-4" />
-             </div>
-          </div>
-
-          <!-- Column 2: Quick Links -->
-          <div class="col-6 col-md-2">
-            <div class="text-subtitle1 text-weight-bold q-mb-md text-grey-3">Product</div>
-            <div class="flex column q-gutter-sm">
-               <a href="#" class="no-decoration text-grey-5 hover-text-white">Features</a>
-               <a href="#" class="no-decoration text-grey-5 hover-text-white">Pricing</a>
-               <a href="#" class="no-decoration text-grey-5 hover-text-white">API</a>
-               <a href="#" class="no-decoration text-grey-5 hover-text-white">Integration</a>
+        
+        <div class="row q-col-gutter-xl text-grey-5 q-pt-lg">
+            <!-- Brand Column -->
+            <div class="col-12 col-md-4">
+                <div class="text-h6 text-white text-weight-bold q-mb-md flex items-center">
+                    <q-icon name="auto_stories" class="q-mr-sm text-primary" />
+                    DigiGura
+                </div>
+                <p class="leading-loose">
+                    Empowering personalized learning through intelligent data analysis and seamless management tools.
+                </p>
+                <div class="q-mt-lg flex q-gutter-md">
+                   <q-btn round flat size="sm" icon="facebook" class="social-btn" />
+                   <q-btn round flat size="sm" icon="check" class="social-btn" /> <!-- Using Check as placeholder for Twitter/X if ionicons not loaded -->
+                   <q-btn round flat size="sm" icon="public" class="social-btn" />
+                </div>
             </div>
-          </div>
 
-          <!-- Column 3: Company -->
-          <div class="col-6 col-md-2">
-            <div class="text-subtitle1 text-weight-bold q-mb-md text-grey-3">Company</div>
-             <div class="flex column q-gutter-sm">
-               <a href="#" class="no-decoration text-grey-5 hover-text-white">About Us</a>
-               <a href="#" class="no-decoration text-grey-5 hover-text-white">Careers</a>
-               <a href="#" class="no-decoration text-grey-5 hover-text-white">Blog</a>
-               <a href="#" class="no-decoration text-grey-5 hover-text-white">Contact</a>
+            <!-- Links -->
+            <div class="col-6 col-md-2">
+                <div class="text-subtitle2 text-white text-weight-bold q-mb-lg">Platform</div>
+                <div class="flex column q-gutter-y-sm">
+                    <a href="#" class="footer-link">Overview</a>
+                    <a href="#" class="footer-link">Features</a>
+                    <a href="#" class="footer-link">Pricing</a>
+                    <a href="#" class="footer-link">Releases</a>
+                </div>
             </div>
-          </div>
-
-          <!-- Column 4: Newsletter -->
-          <div class="col-12 col-md-4">
-            <div class="text-subtitle1 text-weight-bold q-mb-md text-grey-3">Stay Updated</div>
-            <p class="text-grey-5 q-mb-md">Subscribe to our newsletter for the latest updates and features.</p>
-            <div class="row">
-               <q-input 
-                 dense 
-                 outlined 
-                 dark 
-                 placeholder="Enter your email" 
-                 class="col bg-grey-10 rounded-borders-left"
-                 style="border-top-right-radius: 0; border-bottom-right-radius: 0;"
-               />
-               <q-btn 
-                 unelevated 
-                 color="light-green-13" 
-                 text-color="black" 
-                 label="Subscribe" 
-                 class="col-auto rounded-borders-right" 
-                 no-caps
-                 style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
-               />
+             <div class="col-6 col-md-2">
+                <div class="text-subtitle2 text-white text-weight-bold q-mb-lg">Company</div>
+                <div class="flex column q-gutter-y-sm">
+                    <a href="#" class="footer-link">About</a>
+                    <a href="#" class="footer-link">Careers</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Legal</a>
+                </div>
             </div>
-          </div>
 
+            <!-- Newsletter -->
+            <div class="col-12 col-md-4">
+                <div class="text-subtitle2 text-white text-weight-bold q-mb-md">Subscribe</div>
+                <div class="relative-position">
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        class="footer-input full-width"
+                    />
+                    <q-btn 
+                        round 
+                        dense 
+                        unelevated 
+                        color="primary" 
+                        text-color="black" 
+                        icon="arrow_forward" 
+                        class="absolute-right q-ma-xs"
+                        size="sm"
+                    />
+                </div>
+            </div>
         </div>
 
-        <div class="q-mt-xl q-pt-lg border-t border-grey-9 text-center text-grey-6 text-caption">
-           <div>&copy; 2026 Public Tuition Class Management System. All rights reserved.</div>
-           <div class="q-mt-xs">Powered by <span class="text-white text-weight-bold">Lst global enterprises (PVT) LTD</span></div>
+        <div class="q-mt-xl row justify-between items-center text-caption text-grey-8">
+            <div>&copy; 2026 DigiGura. All rights reserved.</div>
+            <div class="flex q-gutter-x-md">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+            </div>
         </div>
+
       </div>
     </q-footer>
   </q-layout>
@@ -117,9 +171,33 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const isScrolled = ref(false)
+const isHidden = ref(false)
+const leftDrawerOpen = ref(false)
+let lastScrollY = 0
+
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
+  const currentScrollY = window.scrollY
+  const delta = currentScrollY - lastScrollY
+  
+  // Determine if scrolled past threshold for glass effect
+  isScrolled.value = currentScrollY > 20
+
+  // Scroll Down -> Hide
+  if (currentScrollY > 100 && delta > 0) {
+    isHidden.value = true
+  } 
+  // Scroll Up -> Show (only if moved up meaningfully or at top)
+  else if (delta < -15 || currentScrollY < 50) {
+    isHidden.value = false
+  }
+
+  // Update last scroll only if substantial movement or purely for direction tracking?
+  // Updating every frame is fine for simple logic
+  lastScrollY = currentScrollY
 }
 
 onMounted(() => {
@@ -132,29 +210,128 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.glass-header {
-  background: rgba(0, 0, 0, 0.8) !important;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+.font-sans {
+    font-family: 'Inter', sans-serif; // Ensure basic font feels modern
 }
 
-.hover-text-white {
-  transition: color 0.3s;
-  &:hover {
-    color: white !important;
+.island-header {
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  z-index: 9999; // Ensure it stays on top of everything
+
+  @media (max-width: 1024px) {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      border-top: none; 
+      // Ensure full width is enforced visually if needed
   }
 }
 
-.no-decoration {
-  text-decoration: none;
+
+
+.header-hidden {
+    transform: translateY(-150%);
 }
 
-.rounded-borders-left {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+.logo-text {
+    letter-spacing: -0.5px;
 }
-.rounded-borders-right {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+
+.nav-link {
+    color: #888;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        color: white;
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+}
+
+.hover-glow {
+    transition: box-shadow 0.3s ease;
+    &:hover {
+        box-shadow: 0 0 20px rgba(204, 255, 0, 0.4);
+    }
+}
+
+.footer-link {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+    &:hover {
+        color: white;
+    }
+}
+
+.social-btn {
+    background: rgba(255,255,255,0.05);
+    color: #888;
+    transition: all 0.3s;
+    &:hover {
+        background: white;
+        color: black;
+    }
+}
+
+.footer-input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+    transition: all 0.3s;
+
+    &:focus {
+        border-color: $primary;
+        background: rgba(255,255,255,0.1);
+    }
+
+    &::placeholder {
+        color: #444;
+    }
+}
+
+.text-gradient {
+    background: linear-gradient(to right, #fff, #666);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.mobile-nav-link {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+    
+    &:hover, &:active {
+        color: $primary;
+    }
+}
+</style>
+
+<style lang="scss">
+/* Final explicit fix for sidebar */
+.mobile-drawer-final {
+    background-color: #000000 !important; /* Force black */
+    background-color: rgba(0, 0, 0, 0.95) !important; /* Slight transparency */
+    backdrop-filter: blur(10px);
+    z-index: 12000 !important; /* Ensure it is on top */
+}
+
+/* Ensure the container (which might hold the backdrop) is also high index */
+.q-drawer-container {
+    z-index: 12000 !important; 
+}
+
+/* Ensure the backdrop is just below the drawer */
+.q-drawer__backdrop {
+    z-index: 11999 !important;
+    background-color: rgba(0,0,0,0.5) !important;
 }
 </style>

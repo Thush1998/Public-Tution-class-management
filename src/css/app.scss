@@ -25,5 +25,38 @@ body {
     overflow-x: hidden;
 }
 
+/* Definitive Drawer Z-Index Fix */
+.q-drawer {
+    z-index: 9999 !important;
+}
+
+.q-drawer__backdrop {
+    z-index: 9998 !important;
+}
+
+.sidebar-drawer {
+    z-index: 9999 !important;
+}
+
+/* Ensure page content stays below drawer */
+.q-page-container {
+    z-index: 1 !important;
+}
+
+/* Ensure all page content (hero, cards, etc.) stays below drawer */
+.q-page {
+    z-index: 1 !important;
+    position: relative;
+}
+
+/* Ensure header stays below drawer but above content */
+.q-header {
+    z-index: 2000 !important;
+}
+
+/* Ensure all menus and dropdowns stay on top */
+.q-menu {
+    z-index: 9000 !important;
+}
 
 

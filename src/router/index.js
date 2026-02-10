@@ -6,6 +6,7 @@ import {
   createWebHashHistory,
 } from 'vue-router'
 import routes from './routes'
+import { useAuthStore } from 'src/stores/auth'
 
 /*
  * If not building with SSR mode, you can
@@ -33,5 +34,23 @@ export default defineRouter(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   })
 
+  // Auth guard
+  Router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore()
+    const isAuthenticated = authStore.isAuthenticated
+    const isAdmin = authStore.isAdmin
+    
+    if (to.meta.requiresAuth && !isAuthenticated) {
+      next('/login')
+    } else if (to.meta.requiresAdmin && !isAdmin) {
+      next('/dashboard') // Redirect non-admins to dashboard
+    } else if ((to.path === '/login' || to.path === '/register') && isAuthenticated) {
+      next('/dashboard')
+    } else {
+      next()
+    }
+  })
+
   return Router
 })
+

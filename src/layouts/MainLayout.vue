@@ -34,19 +34,71 @@
 
         <q-space />
 
-        <!-- Action Buttons -->
+        <!-- Action Buttons / Profile Menu -->
         <div class="gt-sm row items-center q-gutter-x-md">
-          <q-btn flat dense no-caps label="Sign In" class="text-grey-4 hover:text-white transition-colors" to="/login" />
-          <q-btn 
-            unelevated 
-            rounded 
-            color="primary" 
-            text-color="black" 
-            label="Get Started" 
-            no-caps 
-            class="text-weight-bold q-px-lg hover-glow"
-            to="/register"
-          />
+          <template v-if="!authStore.isAuthenticated">
+            <q-btn flat dense no-caps label="Sign In" class="text-grey-4 hover:text-white transition-colors" to="/login" />
+            <q-btn 
+              unelevated 
+              rounded 
+              color="primary" 
+              text-color="black" 
+              label="Get Started" 
+              no-caps 
+              class="text-weight-bold q-px-lg hover-glow"
+              to="/register"
+            />
+          </template>
+          <template v-else>
+            <q-btn-dropdown flat rounded class="text-white profile-dropdown" no-caps>
+              <template v-slot:label>
+                <div class="row items-center no-wrap q-px-sm">
+                  <q-avatar size="32px" color="primary" text-color="black" class="q-mr-sm" style="font-weight: 600;">
+                    {{ authStore.userName[0].toUpperCase() }}
+                  </q-avatar>
+                  <div class="column items-start" style="max-width: 150px;">
+                    <span class="text-weight-medium text-white" style="font-size: 14px; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;">{{ authStore.userName }}</span>
+                  </div>
+                </div>
+              </template>
+              <q-list style="min-width: 200px; background-color: #1d1d1d;" class="profile-menu text-white">
+                <q-item clickable v-close-popup to="/dashboard" class="q-py-sm menu-item">
+                  <q-item-section avatar>
+                    <q-icon name="dashboard" color="primary" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="text-weight-medium text-white">Dashboard</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item v-if="authStore.isAdmin" clickable v-close-popup to="/users" class="q-py-sm menu-item">
+                  <q-item-section avatar>
+                    <q-icon name="group" color="primary" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="text-weight-medium text-white">Manage Users</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-separator dark v-if="authStore.isAdmin" />
+                <q-item clickable v-close-popup to="/profile" class="q-py-sm menu-item">
+                  <q-item-section avatar>
+                    <q-icon name="account_circle" color="primary" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="text-weight-medium text-white">Profile</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-separator dark />
+                <q-item clickable v-close-popup @click="handleLogout" class="q-py-sm menu-item">
+                  <q-item-section avatar>
+                    <q-icon name="logout" color="primary" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="text-weight-medium text-white">Sign Out</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </template>
         </div>
 
         <!-- Mobile Menu Button - Opens Drawer -->
@@ -59,9 +111,11 @@
       v-model="leftDrawerOpen"
       side="right"
       overlay
+      elevated
       behavior="mobile"
       :width="280"
-      style="z-index: 3000 !important;"
+      style="z-index: 9999 !important;"
+      class="sidebar-drawer"
     >
       <div class="column full-height q-pa-md text-white" style="background-color: #1d1d1d;">
         <q-list separator class="no-border">
@@ -111,9 +165,15 @@
         </q-list>
         
         <!-- Footer in Drawer -->
-        <div class="q-mt-auto q-pa-sm q-gutter-y-sm">
+        <div v-if="!authStore.isAuthenticated" class="q-mt-auto q-pa-sm q-gutter-y-sm">
              <q-btn outline rounded color="white" label="Sign In" no-caps class="full-width" to="/login" />
              <q-btn unelevated rounded color="primary" text-color="black" label="Get Started" no-caps class="full-width text-weight-bold" to="/register" />
+        </div>
+        <div v-else class="q-mt-auto q-pa-sm q-gutter-y-sm">
+             <q-btn unelevated rounded color="primary" text-color="black" label="Dashboard" icon="dashboard" no-caps class="full-width text-weight-bold" to="/dashboard" />
+             <q-btn v-if="authStore.isAdmin" unelevated rounded color="secondary" text-color="black" label="Manage Users" icon="group" no-caps class="full-width text-weight-bold" to="/users" />
+             <q-btn outline rounded color="primary" label="Profile" icon="account_circle" no-caps class="full-width" to="/profile" />
+             <q-btn outline rounded color="red" label="Logout" icon="logout" no-caps class="full-width" @click="handleLogout" />
         </div>
       </div>
     </q-drawer>
@@ -165,22 +225,21 @@
 
             <!-- Newsletter -->
             <div class="col-12 col-md-4">
-                <div class="text-subtitle2 text-white text-weight-bold q-mb-md">Subscribe</div>
-                <div class="relative-position">
+                <div class="text-subtitle2 text-white text-weight-bold q-mb-md">Stay Updated</div>
+                <p class="text-grey-6 text-caption q-mb-md">Get the latest updates and news.</p>
+                <div class="subscribe-box">
                     <input 
                         type="email" 
                         placeholder="Enter your email" 
-                        class="footer-input full-width"
+                        class="subscribe-input"
                     />
                     <q-btn 
-                        round 
-                        dense 
-                        unelevated 
-                        color="primary" 
-                        text-color="black" 
-                        icon="arrow_forward" 
-                        class="absolute-right q-ma-xs"
-                        size="sm"
+                        flat
+                        round
+                        dense
+                        icon="send" 
+                        class="subscribe-btn"
+                        size="md"
                     />
                 </div>
             </div>
@@ -201,6 +260,13 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useAuthStore } from 'stores/auth'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+
+const authStore = useAuthStore()
+const router = useRouter()
+const $q = useQuasar()
 
 const isScrolled = ref(false)
 const isHidden = ref(false)
@@ -232,8 +298,20 @@ const handleScroll = () => {
   lastScrollY = currentScrollY
 }
 
+const handleLogout = async () => {
+  await authStore.signOut()
+  $q.notify({
+    color: 'info',
+    message: 'Logged out successfully',
+    icon: 'logout'
+  })
+  router.push('/')
+}
+
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  authStore.initialize()
 })
 
 onUnmounted(() => {
@@ -312,22 +390,46 @@ onUnmounted(() => {
     }
 }
 
-.footer-input {
+// Modern Subscribe Box
+.subscribe-box {
+    display: flex;
+    align-items: center;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    padding: 12px 16px;
-    border-radius: 8px;
-    color: white;
-    outline: none;
-    transition: all 0.3s;
+    border-radius: 12px;
+    padding: 4px;
+    transition: all 0.3s ease;
 
-    &:focus {
+    &:focus-within {
         border-color: $primary;
-        background: rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.08);
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
     }
+}
+
+.subscribe-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 12px 16px;
+    color: white;
+    font-size: 14px;
+    outline: none;
 
     &::placeholder {
-        color: #444;
+        color: #666;
+    }
+}
+
+.subscribe-btn {
+    color: $primary !important;
+    transition: all 0.3s ease;
+    margin-right: 4px;
+
+    &:hover {
+        transform: translateX(3px) scale(1.1);
+        color: white !important;
+        background: rgba($primary, 0.15) !important;
     }
 }
 
@@ -336,6 +438,7 @@ onUnmounted(() => {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .mobile-nav-link {
     color: #ccc;
     text-decoration: none;
@@ -343,6 +446,14 @@ onUnmounted(() => {
     
     &:hover, &:active {
         color: $primary;
+    }
+}
+
+.profile-menu .menu-item {
+    transition: background-color 0.2s;
+    
+    &:hover {
+        background-color: rgba($primary, 0.25) !important;
     }
 }
 </style>

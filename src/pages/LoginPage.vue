@@ -91,9 +91,11 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { supabase } from 'boot/supabase'
 import { useQuasar } from 'quasar'
+import { useAuthStore } from 'stores/auth'
 
 const router = useRouter()
 const $q = useQuasar()
+const authStore = useAuthStore()
 
 const email = ref('')
 const password = ref('')
@@ -103,18 +105,20 @@ const loading = ref(false)
 const handleLogin = async () => {
     loading.value = true
     try {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
             email: email.value,
             password: password.value,
         })
         if (error) throw error
+        
+        authStore.setUser(data.user, data.session)
         
         $q.notify({
             color: 'positive',
             message: 'Login successful!',
             icon: 'check'
         })
-        router.push('/')
+        router.push('/dashboard')
     } catch (error) {
         $q.notify({
             color: 'negative',

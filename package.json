@@ -1,8 +1,8 @@
 {
   "name": "tuition-manager",
   "version": "0.0.1",
-  "description": "all in one tuition class management",
-  "productName": "ClassMaster",
+  "description": "DigiGura - The All-in-One Tuition Management System",
+  "productName": "DigiGura",
   "author": "Thushara",
   "type": "module",
   "private": true,
@@ -17,13 +17,17 @@
   "dependencies": {
     "@quasar/extras": "^1.16.4",
     "@supabase/supabase-js": "^2.95.3",
+    "apexcharts": "^5.3.6",
     "axios": "^1.2.1",
     "dotenv": "^17.2.4",
+    "html5-qrcode": "^2.3.8",
     "pinia": "^3.0.1",
+    "qrcode.vue": "^3.8.0",
     "quasar": "^2.16.0",
     "vue": "^3.5.22",
     "vue-i18n": "^11.0.0",
-    "vue-router": "^4.0.0"
+    "vue-router": "^4.0.0",
+    "vue3-apexcharts": "^1.10.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
